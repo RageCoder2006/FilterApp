@@ -1,14 +1,23 @@
-import cv2
-import numpy as np
 import random
+import cv2
 import dlib
 from math import hypot
 
-pjt = ["black", "blue", "green", "orange", "red"]
-pturb = pjt[random.randint(0, len(pjt) - 1)]
+class Turb:
+    def __init__(self, state, imdir, options):
+        self.state = state
+        self.imdir = imdir
+        self.options = options
+        self.color = options[random.randint(0,len(self.options)-1)]
+        self.tpath = f"{self.imdir}/{self.color}.png"
+        self.turbimg = cv2.imread(self.tpath, cv2.IMREAD_UNCHANGED)
+
+pj = Turb("Punjab", "pj",["black","blue","green","orange","red"])
+mh = ("Maharashtra", "mh",[])
+rj = ("Rajasthan", "rj",[])
+misc = ("", "misc", [])
 
 cap = cv2.VideoCapture(0)
-pt = cv2.imread(f"pj/{pturb}.png", cv2.IMREAD_UNCHANGED)
 detect = dlib.get_frontal_face_detector()
 predict = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
 
@@ -37,7 +46,7 @@ def overlay(background, overlay_img, x, y):
     return background
 
 
-def filt():
+def filt(turbIMG):
     while True:
         ret, frame = cap.read()
         frame = cv2.flip(frame, 1)
@@ -51,12 +60,12 @@ def filt():
 
             width = int(hypot(right[0] - left[0], right[1] - left[1])) + 100
             height = int(width * 0.8999)
-            turban = cv2.resize(pt, (width + 150, height))
+            turban = cv2.resize(turbIMG, (width + 150, height))
 
             center_x = ((left[0] + right[0]) // 2 - (width // 2)) - 50
             top_y = (landmarks.part(24).y - height) + 100
 
-            if pt.shape[2] == 4:
+            if turbIMG.shape[2] == 4:
                 frame = overlay(frame, turban, center_x, top_y)
 
         cv2.imshow("Frame", frame)
@@ -66,4 +75,4 @@ def filt():
     cap.release()
     cv2.destroyAllWindows()
 
-filt()
+filt(pj.turbimg)
