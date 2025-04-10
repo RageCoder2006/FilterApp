@@ -3,18 +3,25 @@ import cv2
 import dlib
 from math import hypot
 
+
 class Turb:
-    def __init__(self, state, imdir, options):
+    def __init__(self, state, imdir, options, offsets):
         self.state = state
         self.imdir = imdir
         self.options = options
-        self.color = options[random.randint(0,len(self.options)-1)]
+        self.color = options[random.randint(0, len(self.options) - 1)]
         self.tpath = f"{self.imdir}/{self.color}.png"
         self.turbimg = cv2.imread(self.tpath, cv2.IMREAD_UNCHANGED)
+        self.offsets = offsets
 
-pj = Turb("Punjab", "pj",["black","blue","green","orange","red"])
-mh = ("Maharashtra", "mh",[])
-rj = ("Rajasthan", "rj",[])
+
+pj = Turb("Punjab", "pj", ["black", "blue", "green", "orange", "red"],
+          {"width_offset": 100, "turban_height_offset": 0, "turban_width_offset": 150, "center_x_offset": -50,
+           "top_y_offset": 100})
+mh = Turb("Maharashtra", "mh", ["blue", "green", "orange", "pink"],
+          {"width_offset": 100, "turban_height_offset": 220, "turban_width_offset": 220, "center_x_offset": -50,
+           "top_y_offset": -30})
+rj = ("Rajasthan", "rj", [])
 misc = ("", "misc", [])
 
 cap = cv2.VideoCapture(0)
@@ -42,11 +49,11 @@ def overlay(background, overlay_img, x, y):
 
     overlay_rgb = overlay_img[:, :, :3]
     alpha_mask = overlay_img[:, :, 3:] / 255.0
-    background[y:y+h, x:x+w] = (1 - alpha_mask) * background[y:y+h, x:x+w] + alpha_mask * overlay_rgb
+    background[y:y + h, x:x + w] = (1 - alpha_mask) * background[y:y + h, x:x + w] + alpha_mask * overlay_rgb
     return background
 
 
-def filt(turbIMG):
+def filt(turbIMG, offset):
     while True:
         ret, frame = cap.read()
         frame = cv2.flip(frame, 1)
@@ -58,12 +65,13 @@ def filt(turbIMG):
             left = (landmarks.part(1).x, landmarks.part(1).y)
             right = (landmarks.part(15).x, landmarks.part(15).y)
 
-            width = int(hypot(right[0] - left[0], right[1] - left[1])) + 100
+            width = int(hypot(right[0] - left[0], right[1] - left[1])) + offset.get("width_offset")
             height = int(width * 0.8999)
-            turban = cv2.resize(turbIMG, (width + 150, height))
+            turban = cv2.resize(turbIMG, (
+            width + offset.get("turban_width_offset"), height + offset.get("turban_height_offset")))
 
-            center_x = ((left[0] + right[0]) // 2 - (width // 2)) - 50
-            top_y = (landmarks.part(24).y - height) + 100
+            center_x = ((left[0] + right[0]) // 2 - (width // 2)) + offset.get("center_x_offset")
+            top_y = (landmarks.part(24).y - height) + offset.get("top_y_offset")
 
             if turbIMG.shape[2] == 4:
                 frame = overlay(frame, turban, center_x, top_y)
@@ -75,4 +83,5 @@ def filt(turbIMG):
     cap.release()
     cv2.destroyAllWindows()
 
-filt(pj.turbimg)
+
+filt(mh.turbimg, mh.offsets)
