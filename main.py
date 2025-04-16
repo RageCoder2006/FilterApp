@@ -98,7 +98,7 @@ class TurbanTryApp:
                 x=x_coords[i] + 40, y=y_coords[i] + 160)
 
         tk.Frame(self.root, height=60, width=412, bg=self.navbar_bg).place(x=0, y=700)
-        tk.Button(self.root, text="Try", font=("Helvetica", 10), command=self.try_page, bg=self.navbar_bg, bd=0).place(x=60, y=717)
+        tk.Button(self.root, text="Try", font=("Helvetica", 10), command=self.try_page, bg=self.navbar_bg, bd=0,highlightbackground=self.navbar_bg).place(x=60, y=717)
         tk.Button(self.root, text="Home", font=("Helvetica", 10, "bold"), bg=self.navbar_bg, bd=0).place(x=180, y=717)
         tk.Button(self.root, text="Shop", font=("Helvetica", 10), command=self.shop_page, bg=self.navbar_bg, bd=0).place(x=300, y=717)
 
