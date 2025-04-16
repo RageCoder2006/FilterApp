@@ -1,4 +1,5 @@
 import tkinter as tk
+import datetime
 from PIL import Image, ImageTk
 import random
 import cv2
@@ -47,7 +48,7 @@ class TurbanTryApp:
         self.root.title("TurbanTry")
         self.root.geometry("412x917")
         self.root.configure(bg="#CFB58A")
-
+        self.filtered_frame = None
         self.init_images()
         self.home_page()
 
@@ -96,9 +97,9 @@ class TurbanTryApp:
                 x=x_coords[i] + 40, y=y_coords[i] + 160)
 
         tk.Frame(self.root, height=60, width=412, bg=self.navbar_bg).place(x=0, y=700)
-        tk.Button(self.root, text="Try", font=("Helvetica", 10), command=self.create_try_page, bg=self.navbar_bg, bd=0).place(x=60, y=717)
+        tk.Button(self.root, text="Try", font=("Helvetica", 10), command=self.try_page, bg=self.navbar_bg, bd=0).place(x=60, y=717)
         tk.Button(self.root, text="Home", font=("Helvetica", 10, "bold"), bg=self.navbar_bg, bd=0).place(x=180, y=717)
-        tk.Button(self.root, text="Shop", font=("Helvetica", 10), command=self.create_shop_page, bg=self.navbar_bg, bd=0).place(x=300, y=717)
+        tk.Button(self.root, text="Shop", font=("Helvetica", 10), command=self.shop_page, bg=self.navbar_bg, bd=0).place(x=300, y=717)
 
     def user_page(self):
         self.clear_window()
@@ -126,12 +127,21 @@ class TurbanTryApp:
         rj.tpath = f"assets/{rj.imdir}/{new_color}.png"
         rj.turbimg = cv2.imread(rj.tpath, cv2.IMREAD_UNCHANGED)
 
-    def create_try_page(self):
+    def capture(self):
+        ret, frame = self.cap.read()
+        frame = cv2.flip(frame, 1)
+        if ret:
+            filename = f"captured/capture_{datetime.datetime.now()}.jpg"
+            cv2.imwrite(filename, self.filtered_frame)
+            saved = tk.Label(self.root, text="file saved successfully!", bg="#CFB58A")
+            saved.place(x=120,y=40)
+
+    def try_page(self):
         self.clear_window()
         self.pjbtn = tk.Button(self.root,text="Punjab",command=self.pjbt)
-        self.pjbtn.place(x=10,y=600)
+        self.pjbtn.place(x=20,y=600)
         self.mhbtn = tk.Button(self.root,text="Maharashtra",command=self.mhbt)
-        self.mhbtn.place(x=130,y=600)
+        self.mhbtn.place(x=140,y=600)
         self.rjbtn = tk.Button(self.root,text="Rajasthan",command=self.rjbt)
         self.rjbtn.place(x=300,y=600)
 
@@ -175,15 +185,18 @@ class TurbanTryApp:
             if self.selected_turb.turbimg.shape[2] == 4:
                 frame = overlay(frame, turban, center_x, top_y)
 
+        self.filtered_frame = frame.copy()
         frame = cv2.resize(frame, (400, 300))
         frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         img = Image.fromarray(frame_rgb)
         imgtk = ImageTk.PhotoImage(image=img)
         self.video_label.imgtk = imgtk
         self.video_label.configure(image=imgtk)
-        self.root.after(10, self.update_frame)
+        self.root.after(30, self.update_frame)
+        self.capture_btn = tk.Button(self.root, text="Capture", command=self.capture)
+        self.capture_btn.place(x=150, y=520)
 
-    def create_shop_page(self):
+    def shop_page(self):
         self.clear_window()
         self.back_button()
         tk.Label(self.root, text="Shop Page", font=("Helvetica", 16), bg="#CFB58A").pack(pady=100)
