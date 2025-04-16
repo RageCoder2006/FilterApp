@@ -4,7 +4,6 @@ import random
 import cv2
 import dlib
 from math import hypot
-import numpy as np
 
 
 def overlay(background, overlay_img, x, y):
