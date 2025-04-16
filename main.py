@@ -48,6 +48,7 @@ class TurbanTryApp:
         self.root.title("TurbanTry")
         self.root.geometry("412x917")
         self.root.configure(bg="#CFB58A")
+        self.bgcolor = "#CFB58A"
         self.filtered_frame = None
         self.init_images()
         self.home_page()
@@ -70,16 +71,16 @@ class TurbanTryApp:
                 cleanup()
             self.home_page()
 
-        back_btn = tk.Button(self.root, text="←", font=("Helvetica", 16), command=on_back, bg="#CFB58A", bd=0)
+        back_btn = tk.Button(self.root, text="←", font=("Helvetica", 16), command=on_back, bg=self.bgcolor, bd=0)
         back_btn.place(x=10, y=10)
 
     def home_page(self):
         self.clear_window()
 
-        tk.Label(self.root, text="TurbanTry", font=("Helvetica", 32, "bold"), fg="#01416F", bg="#CFB58A").place(x=30, y=20)
-        tk.Button(self.root, image=self.user_icon, background="#CFB58A", bd=0, command=self.user_page).place(x=360, y=20)
+        tk.Label(self.root, text="TurbanTry", font=("Helvetica", 32, "bold"), fg="#01416F", bg=self.bgcolor).place(x=30, y=20)
+        tk.Button(self.root, image=self.user_icon, background=self.bgcolor, bd=0, command=self.user_page).place(x=360, y=20)
 
-        tk.Label(self.root, text="Learn About", font=("Helvetica", 18), bg="#CFB58A").place(x=160, y=90)
+        tk.Label(self.root, text="Learn About", font=("Helvetica", 18), bg=self.bgcolor).place(x=160, y=90)
 
         items = [
             ("Dastar/Dumalla\n(Punjab)", self.images["img1"], self.info_pj),
@@ -91,9 +92,9 @@ class TurbanTryApp:
         y_coords = [150, 150, 350, 350]
 
         for i in range(4):
-            btn = tk.Button(self.root, image=items[i][1], bg="#CFB58A", bd=0, command=items[i][2])
+            btn = tk.Button(self.root, image=items[i][1], bg=self.bgcolor, bd=0, command=items[i][2])
             btn.place(x=x_coords[i], y=y_coords[i])
-            tk.Label(self.root, text=items[i][0], font=("Helvetica", 10, "bold"), bg="#CFB58A").place(
+            tk.Label(self.root, text=items[i][0], font=("Helvetica", 10, "bold"), bg=self.bgcolor).place(
                 x=x_coords[i] + 40, y=y_coords[i] + 160)
 
         tk.Frame(self.root, height=60, width=412, bg=self.navbar_bg).place(x=0, y=700)
@@ -104,7 +105,7 @@ class TurbanTryApp:
     def user_page(self):
         self.clear_window()
         self.back_button()
-        tk.Label(self.root, text="Hello, user!", font=("Helvetica", 16), bg="#CFB58A").pack(pady=100)
+        tk.Label(self.root, text="Hello, user!", font=("Helvetica", 16), bg=self.bgcolor).pack(pady=100)
 
     def pjbt(self):
         self.selected_turb = pj
@@ -133,7 +134,7 @@ class TurbanTryApp:
         if ret:
             filename = f"captured/capture_{datetime.datetime.now()}.jpg"
             cv2.imwrite(filename, self.filtered_frame)
-            saved = tk.Label(self.root, text="file saved successfully!", bg="#CFB58A")
+            saved = tk.Label(self.root, text="file saved successfully!", bg=self.bgcolor)
             saved.place(x=120,y=40)
 
     def try_page(self):
@@ -199,37 +200,61 @@ class TurbanTryApp:
     def shop_page(self):
         self.clear_window()
         self.back_button()
-        tk.Label(self.root, text="Shop Page", font=("Helvetica", 16), bg="#CFB58A").pack(pady=100)
+        tk.Label(self.root, text="Shop Page", font=("Helvetica", 16), bg=self.bgcolor).pack(pady=100)
 
     def info_pj(self):
         self.clear_window()
         self.back_button()
-        tk.Label(self.root, text="Pagg Info Page", font=("Helvetica", 16), bg="#CFB58A").pack(pady=100)
-        desc = (
-            "Punjabi turbans, or \"Pagg,\" are a symbol of Sikh identity, spirituality, and cultural pride. "
+        tk.Label(self.root, text="Pagg Info Page", font=("Helvetica", 16), bg=self.bgcolor).pack(pady=100)
+        desc_punjab = (
+            "Punjabi turbans, or \"Pagg,\" are emblematic of Sikh identity and cultural pride. "
             "Styles like Patiala Shahi, Amritsar Shahi, Nok Pagg, and Morni reflect regional and personal expression. "
-            "Colors hold meaning—saffron for courage, blue for spirituality, and white for peace. Traditionally tied daily, "
-            "turbans represent honor and dignity, with modern versions embracing both tradition and style."
+            "Colors hold significance—saffron for courage, blue for spirituality, and white for peace. "
+            "Traditionally tied daily, turbans represent honor and dignity, with modern versions embracing both tradition and style."
         )
-        tk.Label(self.root, text=desc, wraplength=380, justify="left", font=("Helvetica", 18), bg="#CFB58A").pack(padx=20, pady=10)
+        tk.Label(self.root, text=desc_punjab, wraplength=380, justify="left", font=("Helvetica", 18), bg=self.bgcolor).pack(padx=20, pady=10)
 
     def info_rj(self):
         self.clear_window()
         self.back_button()
-        tk.Label(self.root, text="Pagri Info Page", font=("Helvetica", 16), bg="#CFB58A").pack(pady=100)
+        tk.Label(self.root, text="Pagri Info Page", font=("Helvetica", 16), bg=self.bgcolor).pack(pady=100)
+        desc_rajasthan = (
+            "In Rajasthan, the Pagri or Safa is more than just headgear; it's a symbol of identity, status, and regional pride. "
+            "These turbans vary in style, color, and size, often indicating the wearer's community, occasion, or region. "
+            "The Jodhpuri Safa is known for its elegance. "
+            "Turban lengths range from 8 to 20 meters, and they serve practical purposes—from sun protection to drawing water."
+        )
+        tk.Label(self.root, text=desc_rajasthan, wraplength=380, justify="left", font=("Helvetica", 18),
+                 bg=self.bgcolor).pack(padx=20, pady=10)
 
     def info_mh(self):
         self.clear_window()
         self.back_button()
-        tk.Label(self.root, text="Pheta Info Page", font=("Helvetica", 16), bg="#CFB58A").pack(pady=100)
+        tk.Label(self.root, text="Pheta Info Page", font=("Helvetica", 16), bg=self.bgcolor).pack(pady=100)
+        desc_maharashtra = (
+            "The Pheta is a traditional turban from Maharashtra, symbolizing pride and honor. "
+            "Typically made of cotton, it measures about 3.5 to 6 meters in length and 1 meter in width. "
+            "Commonly worn during weddings, festivals, and religious ceremonies, the Pheta comes in various styles like the Kolhapuri and Puneri. "
+            "Colors such as saffron signify valor, while white represents peace."
+        )
+        tk.Label(self.root, text=desc_maharashtra, wraplength=380, justify="left", font=("Helvetica", 18),
+                 bg=self.bgcolor).pack(padx=20, pady=10)
 
     def info_misc(self):
         self.clear_window()
         self.back_button()
-        tk.Label(self.root, text="Other Indian Turbans Info Page", font=("Helvetica", 16), bg="#CFB58A").pack(pady=100)
+        tk.Label(self.root, text="Other Indian Turbans Info Page", font=("Helvetica", 16), bg=self.bgcolor).pack(pady=100)
+        desc_others = (
+            "Across India, turbans are part of daily life for many communities. "
+            "Farmers wear large, loose turbans for sun and dust protection. "
+            "In Rajasthan, shepherds wear pink turbans, while farmers use different colors for community identity. "
+            "Railway porters, or coolies, traditionally wear white turbans with red shirts to stand out in crowded stations."
+        )
+        tk.Label(self.root, text=desc_others, wraplength=380, justify="left", font=("Helvetica", 18),
+                 bg=self.bgcolor).pack(padx=20, pady=10)
 
 
-# Define your turbans
+# turban objects
 pj = Turb("Punjab", "pj", ["black", "blue", "green", "orange", "red"],
           {"width_offset": 100, "turban_height_offset": 0, "turban_width_offset": 150, "center_x_offset": -50, "top_y_offset": 100})
 mh = Turb("Maharashtra", "mh", ["blue", "green", "orange", "pink"],
