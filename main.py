@@ -10,7 +10,7 @@ import dlib
 from math import hypot
 
 # ------ DATABASE SETUP ------
-load_dotenv("creds.env")
+load_dotenv("secret.env")
 user = os.getenv("DB_USER")
 password = os.getenv("DB_PASSWORD")
 
