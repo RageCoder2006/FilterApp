@@ -49,7 +49,10 @@ def overlay(background, overlay_img, x, y):
     background[y:y + h, x:x + w] = (1 - alpha) * background[y:y + h, x:x + w] + alpha * rgb
     return background
 
+
 assets_path = 'assets/'
+
+
 # for prototype's sake only
 def generate_shop_items():
     mh_styles = os.listdir(os.path.join(assets_path, 'mh'))
@@ -147,7 +150,8 @@ class TurbanTryApp:
         tk.Label(self.root, text="TurbanTry", font=("Helvetica", 32, "bold"),
                  fg="#01416F", bg=self.bgcolor).place(x=30, y=20)
         if self.loggedin:
-            tk.Button(self.root, image=self.user_icon, bg=self.bgcolor, bd=0, command=self.loggedin_window).place(x=360, y=20)
+            tk.Button(self.root, image=self.user_icon, bg=self.bgcolor, bd=0, command=self.loggedin_window).place(x=360,
+                                                                                                                  y=20)
         else:
             tk.Button(self.root, image=self.user_icon, bg=self.bgcolor, bd=0, command=self.user_page).place(x=360, y=20)
 
@@ -184,21 +188,22 @@ class TurbanTryApp:
         self.clear_window()
         self.back_button()
 
-        tk.Label(self.root, text="Name", font=("Aptos", 15, "bold"), background=self.bgcolor).place(x=80,y=100)
+        tk.Label(self.root, text="Name", font=("Aptos", 15, "bold"), background=self.bgcolor).place(x=80, y=100)
         name_entry = tk.Entry(self.root, bg="#87857E")
-        name_entry.place(x=80,y=130)
+        name_entry.place(x=80, y=130)
 
-        tk.Label(self.root, text="Email", font=("Aptos", 15, "bold"), background=self.bgcolor).place(x=80,y=160)
+        tk.Label(self.root, text="Email", font=("Aptos", 15, "bold"), background=self.bgcolor).place(x=80, y=160)
         email_entry = tk.Entry(self.root, bg="#87857E")
-        email_entry.place(x=80,y=180)
+        email_entry.place(x=80, y=180)
 
-        tk.Label(self.root, text="Password", font=("Aptos", 15, "bold"), background=self.bgcolor).place(x=80,y=210)
+        tk.Label(self.root, text="Password", font=("Aptos", 15, "bold"), background=self.bgcolor).place(x=80, y=210)
         pwd_entry = tk.Entry(self.root, show="*", bg="#87857E")
-        pwd_entry.place(x=80,y=240)
+        pwd_entry.place(x=80, y=240)
 
-        tk.Label(self.root, text="Phone Number (Optional)", font=("Aptos", 15, "bold"), background=self.bgcolor).place(x=80,y=270)
+        tk.Label(self.root, text="Phone Number (Optional)", font=("Aptos", 15, "bold"), background=self.bgcolor).place(
+            x=80, y=270)
         phno_entry = tk.Entry(self.root, bg="#87857E")
-        phno_entry.place(x=80,y=300)
+        phno_entry.place(x=80, y=300)
 
         def register_user():
             name = name_entry.get()
@@ -224,11 +229,11 @@ class TurbanTryApp:
                     crsr.execute(query, (uid, name, email, pwd, int(phno), 0))
                 db.commit()
                 self.loggedin = True
-                tk.Label(self.root, text="Registered successfully!").place(x=80,y=380)
+                tk.Label(self.root, text="Registered successfully!").place(x=80, y=380)
             except mysql.connector.Error as err:
-                tk.Label(self.root, text=f"Error: {err}").place(x=80,y=400)
+                tk.Label(self.root, text=f"Error: {err}").place(x=80, y=400)
 
-        tk.Button(self.root, text="Register", command=register_user).place(x=145,y=340)
+        tk.Button(self.root, text="Register", command=register_user).place(x=145, y=340)
 
     def login(self):
         email = self.em.get()
@@ -257,10 +262,12 @@ class TurbanTryApp:
     def loggedin_window(self):
         self.clear_window()
         self.back_button()
-        tk.Label(self.root, text="Welcome " + self.name, font=("Aptos", 15), background=self.bgcolor).place(x=20,y=120)
-        tk.Label(self.root, text=f"Email: {self.em}", font=("Aptos", 15), background=self.bgcolor).place(x=20,y=160)
-        tk.Label(self.root, text=f"Phone No.: {self.phno}", font=("Aptos", 15), background=self.bgcolor).place(x=20,y=190)
-        tk.Button(self.root, text="Logout", command=self.logout_user, highlightbackground=self.bgcolor).place(x=150, y=260)
+        tk.Label(self.root, text="Welcome " + self.name, font=("Aptos", 15), background=self.bgcolor).place(x=20, y=120)
+        tk.Label(self.root, text=f"Email: {self.em}", font=("Aptos", 15), background=self.bgcolor).place(x=20, y=160)
+        tk.Label(self.root, text=f"Phone No.: {self.phno}", font=("Aptos", 15), background=self.bgcolor).place(x=20,
+                                                                                                               y=190)
+        tk.Button(self.root, text="Logout", command=self.logout_user, highlightbackground=self.bgcolor).place(x=150,
+                                                                                                              y=260)
 
     def logout_user(self):
         self.loggedin = False
@@ -273,8 +280,9 @@ class TurbanTryApp:
         tk.Label(self.root, text="Hello, user!",
                  font=("Helvetica", 16), bg=self.bgcolor).pack(pady=100)
         tk.Button(self.root, text="Login", command=self.loginpage, highlightbackground=self.bgcolor).place(x=170, y=200)
-        tk.Button(self.root, text="Sign Up", command=self.signup_window, highlightbackground=self.bgcolor).place(x=162.5,
-                                                                                                             y=300)
+        tk.Button(self.root, text="Sign Up", command=self.signup_window, highlightbackground=self.bgcolor).place(
+            x=162.5,
+            y=300)
 
     def pjbt(self):
         self.selected_turb = pj
@@ -377,7 +385,8 @@ class TurbanTryApp:
             y_position = 100
 
             for item in shop_items:
-                label = tk.Label(self.root, text=f"Turban Style: {item['style']} | Price: ₹{item['price']}", bg=self.bgcolor)
+                label = tk.Label(self.root, text=f"Turban Style: {item['style']} | Price: ₹{item['price']}",
+                                 bg=self.bgcolor)
                 label.place(x=10, y=y_position)
 
                 image_label = tk.Label(self.root, image=item['image'], bg=self.bgcolor)
@@ -389,10 +398,11 @@ class TurbanTryApp:
                 y_position += 100
         else:
             tk.Label(self.root, text="Login or Signup First", font=("Helvetica", 16), bg=self.bgcolor).pack()
+
     def purchase(self):
-        label = tk.Label(self.root, text="Purchased Successfully", font=("Aptos",15), bg=self.bgcolor)
+        label = tk.Label(self.root, text="Purchased Successfully", font=("Aptos", 15), bg=self.bgcolor)
         label.pack()
-        self.root.after(500,label.destroy)
+        self.root.after(500, label.destroy)
 
     def info_pj(self):
         self.clear_window()
