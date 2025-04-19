@@ -393,7 +393,7 @@ class TurbanTryApp:
                 image_label = tk.Label(self.root, image=item['image'], bg=self.bgcolor)
                 image_label.place(x=150, y=y_position)
 
-                purchase_button = tk.Button(self.root, text="Buy", command=self.purchase, bg=self.bgcolor)
+                purchase_button = tk.Button(self.root, text="Buy", command=self.purchase, bg=self.bgcolor,bd = 0, highlightbackground=self.bgcolor)
                 purchase_button.place(x=300, y=y_position)
 
                 y_position += 100
