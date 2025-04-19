@@ -109,8 +109,8 @@ class TurbanTryApp:
         self.root = root
         self.root.title("TurbanTry")
         self.root.geometry("412x917")
-        self.root.configure(bg="#CFB58A")
-        self.bgcolor = "#CFB58A"
+        self.root.configure(bg="#2d3651")
+        self.bgcolor = "#2d3651"
         self.filtered_frame = None
         self.em = tk.StringVar()
         self.phno = tk.IntVar()
@@ -130,7 +130,7 @@ class TurbanTryApp:
             self.images[f"img{i}"] = ImageTk.PhotoImage(img)
         icon_path = os.path.join(script_dir, "assets", "account_circle.png")
         self.user_icon = ImageTk.PhotoImage(Image.open(icon_path).resize((32, 32)))
-        self.navbar_bg = "#E5E5E5"
+        self.navbar_bg = "#ccd6ed"
 
     def clear_window(self):
         for w in self.root.winfo_children():
@@ -142,20 +142,20 @@ class TurbanTryApp:
                 cleanup()
             self.home_page()
 
-        tk.Button(self.root, text="←", font=("Helvetica", 16),
+        tk.Button(self.root, text="←", font=("Aptos", 16),
                   command=on_back, bg=self.bgcolor, bd=0).place(x=10, y=10)
 
     def home_page(self):
         self.clear_window()
-        tk.Label(self.root, text="TurbanTry", font=("Helvetica", 32, "bold"),
-                 fg="#01416F", bg=self.bgcolor).place(x=30, y=20)
+        tk.Label(self.root, text="TurbanTry", font=("Aptos", 32, "bold"),
+                 fg="#c6b6ad", bg=self.bgcolor).place(x=30, y=20)
         if self.loggedin:
             tk.Button(self.root, image=self.user_icon, bg=self.bgcolor, bd=0, command=self.loggedin_window).place(x=360,
                                                                                                                   y=20)
         else:
             tk.Button(self.root, image=self.user_icon, bg=self.bgcolor, bd=0, command=self.user_page).place(x=360, y=20)
 
-        tk.Label(self.root, text="Learn About", font=("Helvetica", 18),
+        tk.Label(self.root, text="Learn About", font=("Aptos", 18),
                  bg=self.bgcolor).place(x=160, y=90)
 
         items = [
@@ -169,15 +169,15 @@ class TurbanTryApp:
         for i, (text, img, cmd) in enumerate(items):
             tk.Button(self.root, image=img, bg=self.bgcolor,
                       bd=0, command=cmd).place(x=xs[i], y=ys[i])
-            tk.Label(self.root, text=text, font=("Helvetica", 10, "bold"),
+            tk.Label(self.root, text=text, font=("Aptos", 10, "bold"),
                      bg=self.bgcolor).place(x=xs[i] + 40, y=ys[i] + 160)
 
         tk.Frame(self.root, height=60, width=412, bg=self.navbar_bg).place(x=0, y=700)
-        tk.Button(self.root, text="Try", font=("Helvetica", 10),
+        tk.Button(self.root, text="Try", font=("Aptos", 10),
                   command=self.try_page, bg=self.navbar_bg, bd=0, highlightbackground=self.navbar_bg).place(x=60, y=717)
-        tk.Button(self.root, text="Home", font=("Helvetica", 10, "bold"),
+        tk.Button(self.root, text="Home", font=("Aptos", 10, "bold"),
                   bg=self.navbar_bg, bd=0, highlightbackground=self.navbar_bg).place(x=180, y=717)
-        tk.Button(self.root, text="Shop", font=("Helvetica", 10),
+        tk.Button(self.root, text="Shop", font=("Aptos", 10),
                   command=self.shop_page, bg=self.navbar_bg, bd=0, highlightbackground=self.navbar_bg).place(x=300,
                                                                                                              y=717)
 
@@ -189,20 +189,20 @@ class TurbanTryApp:
         self.back_button()
 
         tk.Label(self.root, text="Name", font=("Aptos", 15, "bold"), background=self.bgcolor).place(x=80, y=100)
-        name_entry = tk.Entry(self.root, bg="#87857E")
+        name_entry = tk.Entry(self.root, bg="#ccd6ed", fg="black")
         name_entry.place(x=80, y=130)
 
         tk.Label(self.root, text="Email", font=("Aptos", 15, "bold"), background=self.bgcolor).place(x=80, y=160)
-        email_entry = tk.Entry(self.root, bg="#87857E")
+        email_entry = tk.Entry(self.root, bg="#ccd6ed", fg="black")
         email_entry.place(x=80, y=180)
 
         tk.Label(self.root, text="Password", font=("Aptos", 15, "bold"), background=self.bgcolor).place(x=80, y=210)
-        pwd_entry = tk.Entry(self.root, show="*", bg="#87857E")
+        pwd_entry = tk.Entry(self.root, show="*", bg="#ccd6ed", fg="black")
         pwd_entry.place(x=80, y=240)
 
         tk.Label(self.root, text="Phone Number (Optional)", font=("Aptos", 15, "bold"), background=self.bgcolor).place(
             x=80, y=270)
-        phno_entry = tk.Entry(self.root, bg="#87857E")
+        phno_entry = tk.Entry(self.root, bg="#ccd6ed", fg="black")
         phno_entry.place(x=80, y=300)
 
         def register_user():
@@ -233,7 +233,8 @@ class TurbanTryApp:
             except mysql.connector.Error as err:
                 tk.Label(self.root, text=f"Error: {err}").place(x=80, y=400)
 
-        tk.Button(self.root, text="Register", command=register_user).place(x=145, y=340)
+        tk.Button(self.root, text="Register", command=register_user, bd=0, highlightbackground=self.bgcolor).place(
+            x=145, y=340)
 
     def login(self):
         email = self.em.get()
@@ -254,9 +255,9 @@ class TurbanTryApp:
         self.clear_window()
         self.back_button()
         tk.Label(self.root, text="Email:", font=("Aptos", 15, "bold"), background=self.bgcolor).place(x=80, y=130)
-        tk.Entry(self.root, textvariable=self.em, bg="#87857E").place(x=80, y=160)
+        tk.Entry(self.root, textvariable=self.em, bg="#ccd6ed", fg="black").place(x=80, y=160)
         tk.Label(self.root, text="Password:", font=("Aptos", 15, "bold"), background=self.bgcolor).place(x=80, y=190)
-        tk.Entry(self.root, textvariable=self.pwd, show="*", bg="#87857E").place(x=80, y=220)
+        tk.Entry(self.root, textvariable=self.pwd, show="*", bg="#ccd6ed", fg="black").place(x=80, y=220)
         tk.Button(self.root, text="Login", command=self.login, highlightbackground=self.bgcolor).place(x=150, y=260)
 
     def loggedin_window(self):
@@ -278,7 +279,7 @@ class TurbanTryApp:
         self.clear_window()
         self.back_button()
         tk.Label(self.root, text="Hello, user!",
-                 font=("Helvetica", 16), bg=self.bgcolor).pack(pady=100)
+                 font=("Aptos", 16), bg=self.bgcolor).pack(pady=100)
         tk.Button(self.root, text="Login", command=self.loginpage, highlightbackground=self.bgcolor).place(x=170, y=200)
         tk.Button(self.root, text="Sign Up", command=self.signup_window, highlightbackground=self.bgcolor).place(
             x=162.5,
@@ -379,7 +380,7 @@ class TurbanTryApp:
     def shop_page(self):
         self.clear_window()
         self.back_button()
-        tk.Label(self.root, text="Shop Page", font=("Helvetica", 16), bg=self.bgcolor).pack()
+        tk.Label(self.root, text="Shop Page", font=("Aptos", 16), bg=self.bgcolor).pack()
         if self.loggedin:
             shop_items = generate_shop_items()
             y_position = 100
@@ -397,7 +398,7 @@ class TurbanTryApp:
 
                 y_position += 100
         else:
-            tk.Label(self.root, text="Login or Signup First", font=("Helvetica", 16), bg=self.bgcolor).pack()
+            tk.Label(self.root, text="Login or Signup First", font=("Aptos", 16), bg=self.bgcolor).pack()
 
     def purchase(self):
         label = tk.Label(self.root, text="Purchased Successfully", font=("Aptos", 15), bg=self.bgcolor)
@@ -407,7 +408,7 @@ class TurbanTryApp:
     def info_pj(self):
         self.clear_window()
         self.back_button()
-        tk.Label(self.root, text="Pagg Info Page", font=("Helvetica", 16), bg=self.bgcolor).pack(pady=100)
+        tk.Label(self.root, text="Pagg Info Page", font=("Aptos", 16), bg=self.bgcolor).pack(pady=100)
         desc_punjab = (
             "Punjabi turbans, or \"Pagg,\" are emblematic of Sikh identity and cultural pride. "
             "Styles like Patiala Shahi, Amritsar Shahi, Nok Pagg, and Morni reflect regional and personal expression. "
@@ -415,12 +416,12 @@ class TurbanTryApp:
             "Traditionally tied daily, turbans represent honor and dignity, with modern versions embracing both tradition and style."
         )
         tk.Label(self.root, text=desc_punjab, wraplength=380, justify="left",
-                 font=("Helvetica", 18), bg=self.bgcolor).pack(padx=20, pady=10)
+                 font=("Aptos", 18), bg=self.bgcolor).pack(padx=20, pady=10)
 
     def info_rj(self):
         self.clear_window()
         self.back_button()
-        tk.Label(self.root, text="Pagri Info Page", font=("Helvetica", 16), bg=self.bgcolor).pack(pady=100)
+        tk.Label(self.root, text="Pagri Info Page", font=("Aptos", 16), bg=self.bgcolor).pack(pady=100)
         desc_rajasthan = (
             "In Rajasthan, the Pagri or Safa is more than just headgear; it's a symbol of identity, status, and regional pride. "
             "These turbans vary in style, color, and size, often indicating the wearer's community, occasion, or region. "
@@ -428,12 +429,12 @@ class TurbanTryApp:
             "Turban lengths range from 8 to 20 meters, and they serve practical purposes—from sun protection to drawing water."
         )
         tk.Label(self.root, text=desc_rajasthan, wraplength=380, justify="left",
-                 font=("Helvetica", 18), bg=self.bgcolor).pack(padx=20, pady=10)
+                 font=("Aptos", 18), bg=self.bgcolor).pack(padx=20, pady=10)
 
     def info_mh(self):
         self.clear_window()
         self.back_button()
-        tk.Label(self.root, text="Pheta Info Page", font=("Helvetica", 16), bg=self.bgcolor).pack(pady=100)
+        tk.Label(self.root, text="Pheta Info Page", font=("Aptos", 16), bg=self.bgcolor).pack(pady=100)
         desc_maharashtra = (
             "The Pheta is a traditional turban from Maharashtra, symbolizing pride and honor. "
             "Typically made of cotton, it measures about 3.5 to 6 meters in length and 1 meter in width. "
@@ -441,13 +442,13 @@ class TurbanTryApp:
             "Colors such as saffron signify valor, while white represents peace."
         )
         tk.Label(self.root, text=desc_maharashtra, wraplength=380, justify="left",
-                 font=("Helvetica", 18), bg=self.bgcolor).pack(padx=20, pady=10)
+                 font=("Aptos", 18), bg=self.bgcolor).pack(padx=20, pady=10)
 
     def info_misc(self):
         self.clear_window()
         self.back_button()
         tk.Label(self.root, text="Other Indian Turbans Info Page",
-                 font=("Helvetica", 16), bg=self.bgcolor).pack(pady=100)
+                 font=("Aptos", 16), bg=self.bgcolor).pack(pady=100)
         desc_others = (
             "Across India, turbans are part of daily life for many communities. "
             "Farmers wear large, loose turbans for sun and dust protection. "
@@ -455,7 +456,7 @@ class TurbanTryApp:
             "Railway porters, or coolies, traditionally wear white turbans with red shirts to stand out in crowded stations."
         )
         tk.Label(self.root, text=desc_others, wraplength=380, justify="left",
-                 font=("Helvetica", 18), bg=self.bgcolor).pack(padx=20, pady=10)
+                 font=("Aptos", 18), bg=self.bgcolor).pack(padx=20, pady=10)
 
 
 if __name__ == '__main__':
